@@ -1,7 +1,6 @@
 # kodi-gpio-controller
-Kodi remote controller by GPIO
 
-Remote controller for Kodi by pressing GPIO pin.
+Kodi remote controller by GPIO switch.
 
 # Target
 
@@ -22,7 +21,7 @@ $ sudo python setup.py install
 
 ## Setup Kodi
 
-### Enable JSON-RPC in Kodi by follow step.
+### Enable JSON-RPC in Kodi
 
 1. Launch Kodi
 2. Open System

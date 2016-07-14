@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(name='kodi-gpio',
-      version='0.0.1',
-      description='Kodi remote controller by GPIO',
+      version='0.0.2',
+      description='Kodi remote controller by GPIO switch',
       author='Koji Hachiya',
       author_email='koji.hachiya@gmail.com',
       url='https://github.com/koji88/kodi-gpio-controller/',

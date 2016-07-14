@@ -5,10 +5,12 @@ from __future__ import print_function
 
 import sys
 import argparse
-import kodicontroller as KodiController
 import gpiocontroller as GPIOController
 import config as Configure
 from twisted.internet import reactor
+
+import kodiplaylist as KodiPlaylist
+import kodiplayer as KodiPlayer
 
 isQuiet = False
 
@@ -23,33 +25,48 @@ def main():
     args = p.parse_args()
 
     if not args.conf:
-        print("No configuration file")
+        print("configuration file is not supplied")
         return
 
     isQuiet = args.quiet
 
     conf = Configure.Configure(args.conf)
     
-    kodi = KodiController.KodiController(conf.getServerConf())
-    kodi.clearPlaylist()
-
+    player   = KodiPlayer.KodiPlayer(conf.getServerConf())
+    playlist = KodiPlaylist.KodiPlaylist(conf.getServerConf())
+    
     option = conf.getOption()
     files  = conf.getFiles()
-    pinmap = []
-    
-    for k,v in files.items():
-        kodi.addFileToPlaylist(v)
+    command= conf.getCommand()
 
-    if option["autostart"] in files:
-        kodi.playPlaylist(repeat = option["repeat"])
+    playlist.Clear()    
+    for k,v in files.items():
+        playlist.AddFile(v)
+
+    if option["autostart"]:
+        playlist.Play(repeat = option["repeat"])
 
     def sw_pressed(gpiopin):
+        if option["exit"] == gpiopin:
+            myprint("gpio {0} is pressed: exit".format(gpiopin))
+            reactor.stop()
+            return
+
+        if gpiopin in command:
+            myprint("gpio {0} is pressed: do {1}".format(gpiopin,command[gpiopin]))
+            player.Do(command[gpiopin])
+            return
+        
         pos = files.keys().index(gpiopin)
-        myprint("gpio {0} pressed play {1}".format(gpiopin,files[gpiopin]))
-        kodi.playPlaylist(position = pos, repeat = option["repeat"])
+        myprint("gpio {0} is pressed: play {1}".format(gpiopin,files[gpiopin]))
+        playlist.Play(position = pos, repeat = option["repeat"])
         
 
-    gpio = GPIOController.GPIOController(files.keys(),sw_pressed)
+    pins = command.keys() + files.keys()
+    if option["exit"]:
+        pins.append(option["exit"])
+        
+    gpio = GPIOController.GPIOController(pins,sw_pressed)
     
     reactor.run()
 

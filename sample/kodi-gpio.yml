@@ -5,10 +5,17 @@ kodi:
   password: 1234
   
 option:
-  repeat: one
-  autostart: 24
+  repeat: all
+  autostart: True
+  exit: 21
+
+command:
+  18 : PlayPause
+  23 : Stop
+  24 : Next
+  25 : Previous
 
 files:
-  24 : medias/emu.mp4
-  25 : medias/penguin.mp4
+  14 : medias/emu.mp4
+  15 : medias/penguin.mp4
 

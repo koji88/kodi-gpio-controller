@@ -23,4 +23,7 @@ class Configure:
 
     def getFiles(self):
         return self.__data["files"]
+
+    def getCommand(self):
+        return self.__data["command"]
     
