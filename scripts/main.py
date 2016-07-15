@@ -39,12 +39,12 @@ def main():
     files  = conf.getFiles()
     command= conf.getCommand()
 
-    playlist.Clear()    
+    playlist.clear()    
     for k,v in files.items():
-        playlist.AddFile(v)
+        playlist.addFile(v)
 
     if option["autostart"]:
-        playlist.Play(repeat = option["repeat"])
+        playlist.play(repeat = option["repeat"])
 
     def sw_pressed(gpiopin):
         if option["exit"] == gpiopin:
@@ -54,12 +54,12 @@ def main():
 
         if gpiopin in command:
             myprint("gpio {0} is pressed: do {1}".format(gpiopin,command[gpiopin]))
-            player.Do(command[gpiopin])
+            player.do(command[gpiopin])
             return
         
         pos = files.keys().index(gpiopin)
         myprint("gpio {0} is pressed: play {1}".format(gpiopin,files[gpiopin]))
-        playlist.Play(position = pos, repeat = option["repeat"])
+        playlist.play(position = pos, repeat = option["repeat"])
         
 
     pins = command.keys() + files.keys()

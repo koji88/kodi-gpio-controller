@@ -10,10 +10,10 @@ option:
   exit: 21
 
 command:
-  18 : PlayPause
-  23 : Stop
-  24 : Next
-  25 : Previous
+  18 : playPause
+  23 : stop
+  24 : next
+  25 : previous
 
 files:
   14 : medias/emu.mp4

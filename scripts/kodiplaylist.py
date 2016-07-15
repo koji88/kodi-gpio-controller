@@ -14,7 +14,7 @@ class KodiPlaylist(KodiController.KodiController):
         super(KodiPlaylist, self).__init__(serverconf)
         self.__playlistid = playlistid
 
-    def Clear(self):
+    def clear(self):
         command = {
             "jsonrpc": "2.0",
             "method": "Playlist.Clear",
@@ -23,9 +23,9 @@ class KodiPlaylist(KodiController.KodiController):
             },
             "id": 1
         }
-        return super(KodiPlaylist, self).Post(command)
+        return super(KodiPlaylist, self).post(command)
 
-    def AddFile(self, filename):
+    def addFile(self, filename):
         command = {
             "jsonrpc": "2.0",
             "method": "Playlist.Add",
@@ -36,9 +36,9 @@ class KodiPlaylist(KodiController.KodiController):
             },
             "id": 1
         }
-        return super(KodiPlaylist, self).Post(command)
+        return super(KodiPlaylist, self).post(command)
         
-    def Play(self, position = 0 , repeat = "one"):
+    def play(self, position = 0 , repeat = "one"):
         command = {
             "jsonrpc": "2.0",
             "method": "Player.Open",
@@ -53,5 +53,5 @@ class KodiPlaylist(KodiController.KodiController):
             },
             "id": 1
         }
-        return super(KodiPlaylist, self).Post(command)
+        return super(KodiPlaylist, self).post(command)
     

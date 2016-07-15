@@ -8,57 +8,59 @@ import requests
 import json
 
 class KodiPlayer(KodiController.KodiController):
+    __playerid = 0
 
-    def __init__(self, serverconf , Playerid = 0):
+    def __init__(self, serverconf , playerid = 0):
         super(KodiPlayer, self).__init__(serverconf)
+        self.__playerid = playerid
 
-    def Do(self,name):
+    def do(self,name):
         method = getattr(self, name)
         method()        
         
-    def PlayPause(self):
+    def playPause(self):
         command = {
             "jsonrpc": "2.0",
             "method": "Player.PlayPause",
             "params": {
-                "playerid": 0,
+                "playerid": self.__playerid,
             },
             "id": 1
         }
-        return super(KodiPlayer, self).Post(command)
+        return super(KodiPlayer, self).post(command)
 
-    def Stop(self):
+    def stop(self):
         command = {
             "jsonrpc": "2.0",
             "method": "Player.Stop",
             "params": {
-                "playerid": 0,
+                "playerid": self.__playerid,
             },
             "id": 1
         }
-        return super(KodiPlayer, self).Post(command)
+        return super(KodiPlayer, self).post(command)
 
-    def Next(self):
+    def next(self):
         command = {
             "jsonrpc": "2.0",
             "method": "Player.GoTo",
             "params": {
-                "playerid": 0,
+                "playerid": self.__playerid,
                 "to" : "next"
             },
             "id": 1
         }
-        return super(KodiPlayer, self).Post(command)
+        return super(KodiPlayer, self).post(command)
 
-    def Previous(self):
+    def previous(self):
         command = {
             "jsonrpc": "2.0",
             "method": "Player.GoTo",
             "params": {
-                "playerid": 0,
+                "playerid": self.__playerid,
                 "to" : "previous"
             },
             "id": 1
         }
-        return super(KodiPlayer, self).Post(command)
+        return super(KodiPlayer, self).post(command)
         

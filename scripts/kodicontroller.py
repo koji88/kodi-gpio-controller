@@ -13,7 +13,7 @@ class KodiController(object):
     def __init__(self, serverconf):
         self.__serverconf = serverconf
 
-    def Post(self,command):
+    def post(self,command):
         url = "http://" + self.__serverconf["hostname"] +  ":" + str(self.__serverconf["port"]) + "/jsonrpc"
         headers = {"Content-Type": "application/json"}
         r = requests.post(
