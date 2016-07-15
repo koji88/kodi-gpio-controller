@@ -4,18 +4,27 @@ kodi:
   user: kodi
   password: 1234
   
+gpiomap:
+  0 : 14
+  1 : 15
+  2 : 18
+  3 : 23
+  4 : 24
+  5 : 25
+  6 : 21
+
 option:
   repeat: all
   autostart: True
-  exit: 21
+  exit: 6
 
 command:
-  18 : playPause
-  23 : stop
-  24 : next
-  25 : previous
+  2 : playPause
+  3 : stop
+  4 : next
+  5 : previous
 
 files:
-  14 : medias/emu.mp4
-  15 : medias/penguin.mp4
+  0 : medias/emu.mp4
+  1 : medias/penguin.mp4
 

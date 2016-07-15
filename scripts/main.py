@@ -34,7 +34,8 @@ def main():
     
     player   = KodiPlayer.KodiPlayer(conf.getServerConf())
     playlist = KodiPlaylist.KodiPlaylist(conf.getServerConf())
-    
+
+    gpiomap= conf.getGPIOMap()
     option = conf.getOption()
     files  = conf.getFiles()
     command= conf.getCommand()
@@ -47,26 +48,23 @@ def main():
         playlist.play(repeat = option["repeat"])
 
     def sw_pressed(gpiopin):
-        if option["exit"] == gpiopin:
+        num = gpiomap[gpiopin]
+        if option["exit"] == num:
             myprint("gpio {0} is pressed: exit".format(gpiopin))
             reactor.stop()
             return
 
-        if gpiopin in command:
-            myprint("gpio {0} is pressed: do {1}".format(gpiopin,command[gpiopin]))
-            player.do(command[gpiopin])
+        if num in command:
+            myprint("gpio {0} is pressed: do {1}".format(gpiopin,command[num]))
+            player.do(command[num])
             return
         
-        pos = files.keys().index(gpiopin)
-        myprint("gpio {0} is pressed: play {1}".format(gpiopin,files[gpiopin]))
+        pos = files.keys().index(num)
+        myprint("gpio {0} is pressed: play {1}".format(gpiopin,files[num]))
         playlist.play(position = pos, repeat = option["repeat"])
         
 
-    pins = command.keys() + files.keys()
-    if option["exit"]:
-        pins.append(option["exit"])
-        
-    gpio = GPIOController.GPIOController(pins,sw_pressed)
+    gpio = GPIOController.GPIOController(gpiomap.keys(),sw_pressed)
     
     reactor.run()
 

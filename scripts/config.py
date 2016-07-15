@@ -26,4 +26,7 @@ class Configure:
 
     def getCommand(self):
         return self.__data["command"]
-    
+
+    def getGPIOMap(self):
+        return {v:k for k, v in self.__data["gpiomap"].items()}
+        
