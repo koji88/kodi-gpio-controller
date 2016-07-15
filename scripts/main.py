@@ -47,6 +47,8 @@ def main():
     if option["autostart"]:
         playlist.play(repeat = option["repeat"])
 
+    gpio = GPIOController.GPIOController(gpiomap.keys())
+        
     def sw_pressed(gpiopin):
         num = gpiomap[gpiopin]
         if option["exit"] == num:
@@ -64,7 +66,7 @@ def main():
         playlist.play(position = pos, repeat = option["repeat"])
         
 
-    gpio = GPIOController.GPIOController(gpiomap.keys(),sw_pressed)
+    gpio.registerPressedCallback(gpiomap.keys(),sw_pressed)
     
     reactor.run()
 
