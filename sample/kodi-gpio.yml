@@ -1,29 +1,40 @@
+# kodi setttings
 kodi:
   hostname: localhost
   port: 8080
   user: kodi
   password: 1234
-  
-gpiomap:
-  0 : 14
-  1 : 15
-  2 : 18
-  3 : 23
-  4 : 24
-  5 : 25
-  6 : 21
 
+# gpio mapping
+# ntri   -> n triger gpio pin
+# n      -> digit gpio pins [high bit,... low bit]
+# number -> function number
+gpiomap:
+  ntri : 14
+  n : [18, 15]
+  4 : 23
+  5 : 24
+  6 : 25
+  7 : 21
+
+# misc option
+# repeat -> all / one / none
+# exit   -> when func num is pressed, script will be terminated.
 option:
   repeat: all
   autostart: True
-  exit: 6
+  exit: 7
 
+# command
+# availavle command: playPause, stop, next, previous
 command:
   2 : playPause
   3 : stop
   4 : next
   5 : previous
 
+# files for playlist
+# number -> file (it must be available on Kodi)
 files:
   0 : medias/emu.mp4
   1 : medias/penguin.mp4

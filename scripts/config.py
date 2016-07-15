@@ -28,5 +28,13 @@ class Configure:
         return self.__data["command"]
 
     def getGPIOMap(self):
-        return {v:k for k, v in self.__data["gpiomap"].items()}
-        
+        d = {v:k for k, v in self.__data["gpiomap"].items() if type(k) == int}
+        if "ntri" in self.__data["gpiomap"]:
+            d[self.__data["gpiomap"]["ntri"]] = "ntri"
+        return d
+
+    def getGPION(self):
+        if "n" in self.__data["gpiomap"]:
+            return self.__data["gpiomap"]["n"]
+        return []
+    

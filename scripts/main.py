@@ -36,6 +36,7 @@ def main():
     playlist = KodiPlaylist.KodiPlaylist(conf.getServerConf())
 
     gpiomap= conf.getGPIOMap()
+    gpion  = conf.getGPION()
     option = conf.getOption()
     files  = conf.getFiles()
     command= conf.getCommand()
@@ -47,26 +48,28 @@ def main():
     if option["autostart"]:
         playlist.play(repeat = option["repeat"])
 
-    gpio = GPIOController.GPIOController(gpiomap.keys())
+    gpio = GPIOController.GPIOController(gpiomap.keys() + gpion)
         
     def sw_pressed(gpiopin):
-        num = gpiomap[gpiopin]
+        num =gpiomap[gpiopin]
+        if num == "ntri":
+            num = gpio.getBinary(gpion)
+            
+        myprint("gpio {0} is pressed: funcnum {1}".format(gpiopin,num))
         if option["exit"] == num:
-            myprint("gpio {0} is pressed: exit".format(gpiopin))
             reactor.stop()
             return
 
         if num in command:
-            myprint("gpio {0} is pressed: do {1}".format(gpiopin,command[num]))
             player.do(command[num])
             return
         
         pos = files.keys().index(num)
-        myprint("gpio {0} is pressed: play {1}".format(gpiopin,files[num]))
         playlist.play(position = pos, repeat = option["repeat"])
         
 
-    gpio.registerPressedCallback(gpiomap.keys(),sw_pressed)
+    gpio.allocate(gpiomap.keys(),sw_pressed)
+    gpio.allocate(gpion)
     
     reactor.run()
 
