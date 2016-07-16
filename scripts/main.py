@@ -63,9 +63,10 @@ def main():
         if num in command:
             player.do(command[num])
             return
-        
-        pos = files.keys().index(num)
-        playlist.play(position = pos, repeat = option["repeat"])
+
+        if num in files:
+            pos = files.keys().index(num)
+            playlist.play(position = pos, repeat = option["repeat"])
         
 
     gpio.allocate(gpiomap.keys(),sw_pressed)
