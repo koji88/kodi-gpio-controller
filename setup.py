@@ -12,7 +12,6 @@ setup(name='kodi-gpio',
       kodi-gpio = scripts.main:main
       """,
       install_requires=[
-          'sysfs-gpio',
-          'twisted'
+          'sysfs-gpio'
       ],
 )
