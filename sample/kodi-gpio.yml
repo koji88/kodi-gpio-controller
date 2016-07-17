@@ -26,6 +26,7 @@ gpiomap:
 option:
   repeat: all
   autostart: True
+  pullup: False
   exit: 7
 
 # command

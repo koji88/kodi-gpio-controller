@@ -48,10 +48,10 @@ def main():
     if option["autostart"]:
         playlist.play(repeat = option["repeat"])
 
-    gpio = GPIOController.GPIOController(gpiomap.keys() + gpion)
+    gpio = GPIOController.GPIOController(gpiomap.keys() + gpion, pullup = option["pullup"])
         
     def sw_pressed(gpiopin):
-        num =gpiomap[gpiopin]
+        num = gpiomap[gpiopin]
         if num == "ntri":
             num = gpio.getBinary(gpion)
             
